@@ -110,6 +110,9 @@ p {
     border-right: 3px solid #fff;
     transform: rotate(45deg);
     animation: bounce 2s infinite;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    cursor: pointer;
 }
 
 /* Oddzielne style dla lewej i prawej animacji */
@@ -286,6 +289,9 @@ p {
         border-right: 3px solid #fff;
         transform: rotate(45deg);
         animation: bounce 2s infinite;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+        cursor: pointer;
     }
 
     .left-animation {

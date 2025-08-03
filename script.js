@@ -44,15 +44,25 @@
     const showIcons = (section) => {
         const leftAnimation = section.querySelector('.left-animation');
         const rightAnimation = section.querySelector('.right-animation');
+        const scrollDownArrow = section.querySelector('.scroll-down-arrow');
         if (leftAnimation) leftAnimation.classList.add('show-animation');
         if (rightAnimation) rightAnimation.classList.add('show-animation');
+        if (scrollDownArrow) {
+            setTimeout(() => {
+                scrollDownArrow.style.opacity = '1';
+            }, 1000);
+        }
     };
 
     const hideIcons = (section) => {
         const leftAnimation = section.querySelector('.left-animation');
         const rightAnimation = section.querySelector('.right-animation');
+        const scrollDownArrow = section.querySelector('.scroll-down-arrow');
         if (leftAnimation) leftAnimation.classList.add('hide-animation');
         if (rightAnimation) rightAnimation.classList.add('hide-animation');
+        if (scrollDownArrow) {
+            scrollDownArrow.style.opacity = '0';
+        }
     };
 
     const resetIcons = (section) => {
@@ -131,6 +141,12 @@
         }
     });
 
+    const scrollDownArrows = document.querySelectorAll('.scroll-down-arrow');
+    scrollDownArrows.forEach(arrow => {
+        arrow.addEventListener('click', () => {
+            scrollToSection(currentSectionIndex + 1);
+        });
+    });
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
