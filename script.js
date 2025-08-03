@@ -2,6 +2,7 @@
     const sections = document.querySelectorAll('.section');
     let currentSectionIndex = 0;
     let isScrolling = false;
+    let touchStartY = 0;
 
     const showIcons = (section) => {
         const leftAnimation = section.querySelector('.left-animation');
@@ -74,6 +75,25 @@
             scrollToSection(currentSectionIndex - 1);
         }
     });
+
+    window.addEventListener('touchstart', (event) => {
+        touchStartY = event.touches[0].clientY;
+    });
+
+    window.addEventListener('touchend', (event) => {
+        const touchEndY = event.changedTouches[0].clientY;
+        const touchDistance = touchEndY - touchStartY;
+        const scrollThreshold = 50;
+
+        if (!isScrolling) {
+            if (touchDistance < -scrollThreshold) {
+                scrollToSection(currentSectionIndex + 1);
+            } else if (touchDistance > scrollThreshold) {
+                scrollToSection(currentSectionIndex - 1);
+            }
+        }
+    });
+
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
