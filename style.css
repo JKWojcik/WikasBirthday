@@ -115,7 +115,6 @@ p {
     cursor: pointer;
 }
 
-/* Oddzielne style dla lewej i prawej animacji */
 .left-animation {
     position: absolute;
     top: 10%;
@@ -136,7 +135,6 @@ p {
     pointer-events: none;
 }
 
-/* Animacje pojawiania się, "wyskakuje" z boku z efektem odbicia */
 .left-animation.show-animation {
     animation: dropInLeft 1s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
@@ -145,7 +143,6 @@ p {
     animation: dropInRight 1s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* Animacje znikania, "wskakuje" z powrotem na dół */
 .left-animation.hide-animation {
     animation: jumpOutLeft 1s forwards ease-in;
 }
@@ -154,13 +151,11 @@ p {
     animation: jumpOutRight 1s forwards ease-in;
 }
 
-/* Kluczowe klatki animacji */
 @keyframes dropInLeft {
     0% {
         transform: translateX(10vw) translateY(-100vh);
         opacity: 0;
     }
-    /* Start z górnego lewego rogu */
     50% {
         transform: translateX(-5vw) translateY(-5vh);
         opacity: 1;
@@ -176,7 +171,6 @@ p {
         transform: translateX(-10vw) translateY(-100vh);
         opacity: 0;
     }
-    /* Start z górnego prawego rogu */
     50% {
         transform: translateX(5vw) translateY(-5vh);
         opacity: 1;
@@ -281,17 +275,11 @@ p {
     }
 
     .scroll-down-arrow {
-        position: absolute;
-        bottom: 50px;
-        width: 30px;
-        height: 30px;
-        border-bottom: 3px solid #fff;
-        border-right: 3px solid #fff;
-        transform: rotate(45deg);
-        animation: bounce 2s infinite;
-        opacity: 0;
-        transition: opacity 0.5s ease-in-out;
-        cursor: pointer;
+        bottom: 40px;
+        width: 25px;
+        height: 25px;
+        border-bottom: 2px solid #fff;
+        border-right: 2px solid #fff;
     }
 
     .left-animation {
