@@ -1,4 +1,41 @@
 ﻿document.addEventListener('DOMContentLoaded', () => {
+    const mainContent = document.getElementById('main-content');
+    const preloader = document.getElementById('preloader');
+    const images = document.images;
+    const totalImages = images.length;
+    let imagesLoaded = 0;
+
+    const hidePreloader = () => {
+        preloader.style.opacity = '0';
+        setTimeout(() => {
+            preloader.style.display = 'none';
+            mainContent.style.display = 'block';
+            mainContent.classList.add('loaded');
+            scrollToSection(0);
+        }, 500);
+    };
+
+    const imageLoaded = () => {
+        imagesLoaded++;
+        if (imagesLoaded === totalImages) {
+            hidePreloader();
+        }
+    };
+
+    for (let i = 0; i < totalImages; i++) {
+        const image = images[i];
+        if (image.complete) {
+            imageLoaded();
+        } else {
+            image.addEventListener('load', imageLoaded);
+            image.addEventListener('error', imageLoaded);
+        }
+    }
+
+    if (totalImages === 0) {
+        hidePreloader();
+    }
+
     const sections = document.querySelectorAll('.section');
     let currentSectionIndex = 0;
     let isScrolling = false;
@@ -110,6 +147,4 @@
     sections.forEach(section => {
         observer.observe(section);
     });
-
-    scrollToSection(0);
 });
