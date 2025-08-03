@@ -1,18 +1,95 @@
-﻿const birthdate = new Date("2025-08-03T00:00:00").getTime();
+﻿document.addEventListener('DOMContentLoaded', () => {
+    const sections = document.querySelectorAll('.section');
+    let currentSectionIndex = 0;
+    let isScrolling = false;
 
-const countdown = setInterval(function() {
-    const now = new Date().getTime();
-    const distance = birthdate - now;
+    const showIcons = (section) => {
+        const leftAnimation = section.querySelector('.left-animation');
+        const rightAnimation = section.querySelector('.right-animation');
+        if (leftAnimation) leftAnimation.classList.add('show-animation');
+        if (rightAnimation) rightAnimation.classList.add('show-animation');
+    };
 
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    const hideIcons = (section) => {
+        const leftAnimation = section.querySelector('.left-animation');
+        const rightAnimation = section.querySelector('.right-animation');
+        if (leftAnimation) leftAnimation.classList.add('hide-animation');
+        if (rightAnimation) rightAnimation.classList.add('hide-animation');
+    };
 
-    document.getElementById("countdown").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    const resetIcons = (section) => {
+        const leftAnimation = section.querySelector('.left-animation');
+        const rightAnimation = section.querySelector('.right-animation');
+        if (leftAnimation) {
+            leftAnimation.classList.remove('show-animation', 'hide-animation');
+        }
+        if (rightAnimation) {
+            rightAnimation.classList.remove('show-animation', 'hide-animation');
+        }
+    };
 
-    if (distance < 0) {
-        clearInterval(countdown);
-        document.getElementById("countdown").innerHTML = "Wszystkiego Najlepszego!";
-    }
-}, 1000);
+    const changeBodyBackground = (index) => {
+        const body = document.body;
+        const sectionColor = sections[index].getAttribute('data-color');
+        if (sectionColor) {
+            body.style.backgroundColor = sectionColor;
+        }
+    };
+
+    const scrollToSection = (index) => {
+        if (index >= 0 && index < sections.length && !isScrolling) {
+            isScrolling = true;
+
+            if (sections[currentSectionIndex]) {
+                hideIcons(sections[currentSectionIndex]);
+            }
+
+            setTimeout(() => {
+                sections[index].scrollIntoView({ behavior: 'smooth' });
+                currentSectionIndex = index;
+                changeBodyBackground(index);
+
+                resetIcons(sections[currentSectionIndex]);
+
+                setTimeout(() => {
+                    showIcons(sections[currentSectionIndex]);
+                    isScrolling = false;
+                }, 1000);
+            }, 500);
+        }
+    };
+
+    window.addEventListener('wheel', (event) => {
+        if (event.deltaY > 0) {
+            scrollToSection(currentSectionIndex + 1);
+        } else {
+            scrollToSection(currentSectionIndex - 1);
+        }
+    });
+
+    window.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowDown') {
+            scrollToSection(currentSectionIndex + 1);
+        } else if (event.key === 'ArrowUp') {
+            scrollToSection(currentSectionIndex - 1);
+        }
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            } else {
+                entry.target.classList.remove('visible');
+            }
+        });
+    }, {
+        threshold: 0.5
+    });
+
+    sections.forEach(section => {
+        observer.observe(section);
+    });
+
+    scrollToSection(0);
+});

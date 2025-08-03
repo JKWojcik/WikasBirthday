@@ -1,32 +1,152 @@
 ﻿body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    text-align: center;
+        font-family: 'Arial', sans-serif;
+        color: #fff;
+        margin: 0;
+        text-align: center;
+        overflow-y: hidden;
+        background-color: #ADD8E6;
+        transition: background-color 1s ease-in-out;
 }
 
-.container {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+.section {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        box-sizing: border-box;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 1s ease-out, transform 1s ease-out;
+        position: relative;
 }
 
-h1 {
-    color: #333;
+.section.visible {
+        opacity: 1;
+        transform: translateY(0);
+}
+
+.content-container {
+        max-width: 80%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+}
+
+.section-image {
+        width: 400px;
+        height: 400px;
+        object-fit: cover;
+        border-radius: 50%;
+        margin-bottom: 20px;
+        border: 5px solid rgba(255, 255, 255, 0.5);
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+}
+
+h1, h2 {
+        font-size: 3em;
+        margin-bottom: 20px;
 }
 
 p {
-    color: #666;
+        font-size: 2em;
 }
 
-#countdown {
-    font-size: 2em;
-    font-weight: bold;
-    color: #ff6347;
-    margin-top: 20px;
+.scroll-down-arrow {
+        position: absolute;
+        bottom: 50px;
+        width: 30px;
+        height: 30px;
+        border-bottom: 3px solid #fff;
+        border-right: 3px solid #fff;
+        transform: rotate(45deg);
+        animation: bounce 2s infinite;
+}
+
+/* Oddzielne style dla lewej i prawej animacji */
+.left-animation {
+        position: absolute;
+        top: 10%;
+        right: 10%;
+        width: 250px;
+        height: 250px;
+        opacity: 0;
+        pointer-events: none;
+}
+
+.right-animation {
+        position: absolute;
+        top: 10%;
+        left: 10%;
+        width: 250px;
+        height: 250px;
+        opacity: 0;
+        pointer-events: none;
+}
+
+/* Animacje pojawiania się, "wyskakuje" z boku z efektem odbicia */
+.left-animation.show-animation {
+        animation: dropInLeft 1s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.right-animation.show-animation {
+        animation: dropInRight 1s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Animacje znikania, "wskakuje" z powrotem na dół */
+.left-animation.hide-animation {
+        animation: jumpOutLeft 1s forwards ease-in;
+}
+
+.right-animation.hide-animation {
+        animation: jumpOutRight 1s forwards ease-in;
+}
+
+/* Kluczowe klatki animacji */
+@keyframes dropInLeft {
+        0% { transform: translateX(10vw) translateY(-100vh); opacity: 0; } /* Start z górnego lewego rogu */
+        50% { transform: translateX(-5vw) translateY(-5vh); opacity: 1; }
+        100% { transform: translateX(0) translateY(0); opacity: 1; }
+}
+
+@keyframes dropInRight {
+        0% { transform: translateX(-10vw) translateY(-100vh); opacity: 0; } /* Start z górnego prawego rogu */
+        50% { transform: translateX(5vw) translateY(-5vh); opacity: 1; }
+        100% { transform: translateX(0) translateY(0); opacity: 1; }
+}
+
+@keyframes jumpOutLeft {
+        0% { transform: translateX(0) translateY(0); opacity: 1; }
+        30% { transform: translateX(2vw) translateY(-5vh); opacity: 1; }
+        100% { transform: translateX(0) translateY(100vh); opacity: 0; }
+}
+
+@keyframes jumpOutRight {
+        0% { transform: translateX(0) translateY(0); opacity: 1; }
+        30% { transform: translateX(-2vw) translateY(-5vh); opacity: 1; }
+        100% { transform: translateX(0) translateY(100vh); opacity: 0; }
+}
+
+@keyframes bounce {
+        0%, 20%, 50%, 80%, 100% { transform: translateY(0) rotate(45deg); }
+        40% { transform: translateY(-10px) rotate(45deg); }
+        60% { transform: translateY(-5px) rotate(45deg); }
+}
+
+@media (max-width: 768px) {
+        .intro-section h1 {
+                font-size: 2em;
+        }
+        .intro-section p {
+                font-size: 1.2em;
+        }
+        .section-image {
+                width: 200px;
+                height: 200px;
+        }
+        .left-animation, .right-animation {
+                width: 100px;
+                height: 100px;
+        }
 }
