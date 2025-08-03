@@ -46,7 +46,7 @@
             }
 
             setTimeout(() => {
-                sections[index].scrollIntoView({ behavior: 'smooth' });
+                sections[index].scrollIntoView({behavior: 'smooth'});
                 currentSectionIndex = index;
                 changeBodyBackground(index);
 
